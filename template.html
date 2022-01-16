@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="refresh" content="600" />
+		<link href="/icons/weather-icons.css" rel="stylesheet" type="text/css">
+		<style>
+		body {
+			font-size: 170%;
+		}
+		h4 {
+			margin: 0%;
+		}
+		.row {
+		}
+		.column {
+			display:inline-block;
+			padding: 10px;
+		}
+		.wi {
+			font-size: 200%;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="row">
+			<div class="column" style="border:1px solid;border-radius:5px;width:30;">
+				<h4>{{.Current.DateUnix}}</h4>
+				<div style="margin-top:10px; margin-bottom:10px;">
+					<i style="margin:10px;float:left;" class="wi wi-owm-{{(index .Current.Weather 0).Id}}"></i>
+					{{.Current.Temp}}°C, {{.Current.Humidity}}%
+					{{range $i, $e := .Daily}}{{if lt $i 1}}
+					<br>{{.Temp.Min}}/{{.Temp.Max}} °C
+				</div>
+				{{(index .Weather 0).Main}}, {{(index .Weather 0).Description}}
+				{{end}}{{end}}
+				<br>{{.Current.Sunrise}}
+				<br>{{.Current.Sunset}}
+			</div>
+
+			{{range $i, $e := .Daily}}{{if lt $i 6}}{{if gt $i 0}}
+			<div class="column" style="width:10%;">
+				<i class="wi wi-owm-{{(index .Weather 0).Id}}"></i>
+				<h4>{{.DateUnix}}</h4>
+				{{.Temp.Min}}/{{.Temp.Max}} °C
+				<!-- <p>{{(index .Weather 0).Main}}, {{(index .Weather 0).Description}}</p> -->
+			</div>
+			{{end}}{{end}}{{end}}
+		</div>
+		<br>
+		<div class="row">
+			{{range $i, $e := .Hourly}}{{if lt $i 7}}
+			<div class="column" style="width:10%;">
+				<i class="wi wi-owm-{{(index .Weather 0).Id}}"></i>
+				<h4>{{.DateUnix}}</h4>
+				{{.Temp}}°C, {{.Humidity}}%
+			</div>
+			{{end}}{{end}}
+		</div>
+		<span style="float:right;font-size:70%;">
+			{{.Date}}
+		</span>
+
+		<p>
+		</p>
+	</body>
+</html>
