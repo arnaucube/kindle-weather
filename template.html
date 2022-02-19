@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="refresh" content="600" />
+		<meta http-equiv="refresh" content="3600" />
 		<link href="/icons/weather-icons.css" rel="stylesheet" type="text/css">
 		<style>
 		body {
@@ -27,15 +27,18 @@
 			<div class="column" style="border:1px solid;border-radius:5px;width:30;">
 				<h4>{{.Current.DateUnix}}</h4>
 				<div style="margin-top:10px; margin-bottom:10px;">
-					<i style="margin:10px;float:left;" class="wi wi-owm-{{(index .Current.Weather 0).Id}}"></i>
-					{{.Current.Temp}}°C, {{.Current.Humidity}}%
-					{{range $i, $e := .Daily}}{{if lt $i 1}}
+					<!-- <i style="margin:10px;float:left;" class="wi wi-owm-{{(index .Current.Weather 0).Id}}"></i> -->
+					<!-- {{.Current.Temp}}°C, {{.Current.Humidity}}% -->
+				{{range $i, $e := .Daily}}{{if lt $i 1}}
+					<i style="margin:10px;float:left;" class="wi wi-owm-{{(index .Weather 0).Id}}"></i>
+					{{.Temp.Day}}°C, {{.Humidity}}%
 					<br>{{.Temp.Min}}/{{.Temp.Max}} °C
 				</div>
-				{{(index .Weather 0).Main}}, {{(index .Weather 0).Description}}
+				{{(index .Weather 0).Main}}
 				{{end}}{{end}}
-				<br>{{.Current.Sunrise}}
-				<br>{{.Current.Sunset}}
+				<!-- {{(index .Current.Weather 0).Main}} -->
+				<br><i class="wi wi-sunrise" style="font-size:90%"></i> {{.Current.Sunrise}}
+				<br><i class="wi wi-sunset" style="font-size:90%"></i> {{.Current.Sunset}}
 			</div>
 
 			{{range $i, $e := .Daily}}{{if lt $i 6}}{{if gt $i 0}}
@@ -49,11 +52,11 @@
 		</div>
 		<br>
 		<div class="row">
-			{{range $i, $e := .Hourly}}{{if lt $i 7}}
-			<div class="column" style="width:10%;">
+			{{range $i, $e := .Hourly}}{{if lt $i 9}}
+			<div class="column" style="font-size:90%;">
 				<i class="wi wi-owm-{{(index .Weather 0).Id}}"></i>
 				<h4>{{.DateUnix}}</h4>
-				{{.Temp}}°C, {{.Humidity}}%
+				{{.Temp}}°C
 			</div>
 			{{end}}{{end}}
 		</div>
