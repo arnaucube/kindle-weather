@@ -61,11 +61,12 @@ func getOneCall(api string) (*OneCall, error) {
 }
 
 func main() {
-	if len(os.Args) != 2 {
-		fmt.Println("need an openwathermap.org API key as arg")
+	if len(os.Args) != 3 {
+		fmt.Println("need an openwathermap.org API key as arg & port")
 		os.Exit(0)
 	}
 	apiKey := os.Args[1]
+	port := os.Args[2]
 
 	tmpl := template.Must(template.ParseFiles("template.html"))
 
@@ -80,6 +81,6 @@ func main() {
 
 		tmpl.Execute(w, data)
 	})
-	fmt.Println("serving at :8080")
-	http.ListenAndServe(":8080", nil)
+	fmt.Println("serving at :" + port)
+	http.ListenAndServe(":"+port, nil)
 }
